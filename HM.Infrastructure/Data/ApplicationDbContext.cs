@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hospital_management.Data
+namespace HM.Infrastructure
 {
     public class ApplicationDbContext : IdentityDbContext
     {
