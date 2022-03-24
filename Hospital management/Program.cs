@@ -1,4 +1,4 @@
-using Hospital_management.Data;
+using HM.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

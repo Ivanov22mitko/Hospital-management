@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HM.Infrastructure.Migrations
+namespace HM.Infrastructure.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
