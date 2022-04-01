@@ -1,4 +1,4 @@
-using HM.Infrastructure;
+using HM.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

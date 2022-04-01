@@ -97,6 +97,10 @@ namespace Hospital_management.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Register as:")]
+            public string Role { get; set; }
         }
 
 
