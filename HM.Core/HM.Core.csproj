@@ -11,8 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
+    <PackageReference Include="SendGrid" Version="9.27.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Contracts\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
