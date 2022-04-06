@@ -2,29 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using HM.Infrastructure.Data.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using HM.Core.Constants;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 
-namespace Hospital_management.Areas.Identity.Pages.Account
+namespace Hospital_management.Views.Home
 {
-    public class ForgotPasswordModel : PageModel
+    public class ContactModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ContactModel(IEmailSender emailSender)
         {
-            _userManager = userManager;
             _emailSender = emailSender;
         }
 
@@ -48,36 +39,29 @@ namespace Hospital_management.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            public string Name { get; set; }
+
+            [Required]
+            public string Problem { get; set; }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
-                }
-
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ResetPassword",
-                    pageHandler: null,
-                    values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
-
                 await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Hospital management: Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    UserConstants.AdminEmail,
+                    $"Hospital manager message from {Input.Name}",
+                    Input.Problem);
 
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                return RedirectToPage("/");
             }
 
             return Page();
         }
     }
 }
+

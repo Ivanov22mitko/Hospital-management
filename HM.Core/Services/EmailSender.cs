@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using HM.Core.Constants;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
@@ -17,7 +18,7 @@ namespace HM.Core.Services
             _logger = logger;
         }
 
-        public AuthMessageSenderOptions Options { get; } //Set with Secret Manager.
+        public AuthMessageSenderOptions Options { get; }
 
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
@@ -33,15 +34,13 @@ namespace HM.Core.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("your.hospital.helper@gmail.com", "Hospital manager"),
+                From = new EmailAddress(UserConstants.AdminEmail, "Hospital manager"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
             };
             msg.AddTo(new EmailAddress(toEmail));
 
-            // Disable click tracking.
-            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
             msg.SetClickTracking(false, false);
             var response = await client.SendEmailAsync(msg);
             _logger.LogInformation(response.IsSuccessStatusCode
