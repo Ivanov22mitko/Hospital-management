@@ -16,6 +16,11 @@
                 </div>  
             </div>
 
+                <div class="info">
+                    <a href="/Account/Manage/ManageNavPages" class="d-block">Settings</a>
+                </div>  
+
+
             <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button  type="submit" class="nav-link btn btn-link">Logout</button>
             </form>

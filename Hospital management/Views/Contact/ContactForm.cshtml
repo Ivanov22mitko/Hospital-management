@@ -1,12 +1,13 @@
-﻿@using Hospital_management.Views.Home
+﻿@using Hospital_management.Views.Contact
 @model ContactModel
 @{
     ViewData["Title"] = "Contact with administrator";
 }
 
+<h8>The reply from the administrator might take some time so we ask for your patience and understanding.</h8>
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" asp-action="SendEmail">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
                 <label asp-for="Input.Name"></label>
@@ -22,10 +23,12 @@
 
             <div class="form-floating">
                 <label asp-for="Input.Problem"></label>
-                <textarea asp-for="Input.Problem" cols="45" rows="4"></textarea>
+                <textarea asp-for="Input.Problem" class="form-control" aria-required="true" cols="45" rows="4"></textarea>
                 <span asp-validation-for="Input.Problem" class="text-danger"></span>
             </div>
+
             <button type="submit" class="w-100 btn btn-lg btn-primary">Send</button>
+
         </form>
     </div>
 </div>

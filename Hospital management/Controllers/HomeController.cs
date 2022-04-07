@@ -23,11 +23,6 @@ namespace Hospital_management.Controllers
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
         public IActionResult About()
         {
             return View();

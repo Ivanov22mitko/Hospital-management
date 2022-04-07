@@ -44,7 +44,7 @@ namespace HM.Core.Services
             msg.SetClickTracking(false, false);
             var response = await client.SendEmailAsync(msg);
             _logger.LogInformation(response.IsSuccessStatusCode
-                                   ? $"Email to {toEmail} queued successfully!"
+                                   ? $"Email to {toEmail} sent successfully!"
                                    : $"Failure Email to {toEmail}");
         }
     }
