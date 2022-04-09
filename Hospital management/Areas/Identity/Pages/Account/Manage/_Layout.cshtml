@@ -1,4 +1,6 @@
-﻿@{
+﻿@using HM.Infrastructure.Data.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
     {
         Layout = (string)parentLayout;

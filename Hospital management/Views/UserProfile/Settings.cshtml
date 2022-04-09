@@ -1,0 +1,60 @@
+﻿<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <h2>Change account settings</h2>
+            <hr />
+            
+            
+            <div class="form-floating">
+                <label>Current email address:</label>
+                                 
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label>Change email address</label>
+                    <input class="form-control" autocomplete="email" aria-required="true" />             
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label>Full name</label>            
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label>Change full name</label>
+                <label>First Name</label>
+                    <input class="form-control" autocomplete="username" aria-required="true" />             
+                <span class="text-danger"></span>
+                <label>Last Name</label>
+                    <input class="form-control" autocomplete="username" aria-required="true" />             
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label>Current password</label>
+                    <input class="form-control" autocomplete="current-password" aria-required="true" />             
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label>New password</label>
+                    <input class="form-control" autocomplete="new-password" aria-required="true" />              
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label>Confirm new password</label>
+                <input class="form-control" autocomplete="new-password" aria-required="true" />               
+                <span class="text-danger"></span>
+            </div>   
+            
+            <button id="saveChanges" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

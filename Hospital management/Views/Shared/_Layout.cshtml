@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using HM.Infrastructure.Data.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -67,7 +70,7 @@
       </li>
 
       <li class="nav-item">
-          @if(User.Identity.IsAuthenticated)
+          @if(SignInManager.IsSignedIn(User))
           {
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" role="button">
                     <img src="~/img/user3-128x128.jpg" class="img-circle elevation-2 profile-pic" alt="User Image">
@@ -116,7 +119,7 @@
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
-  <partial name="_LoginPartial" />
+  <partial name="_UserProfileSidebar"/>
 
   <!-- Main Footer -->
   <footer class="main-footer">

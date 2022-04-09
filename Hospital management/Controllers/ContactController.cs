@@ -20,9 +20,9 @@ namespace Hospital_management.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendEmail(ContactModel contactModel)
+        public async Task<IActionResult> SendEmail(ContactModel contactModel)
         {
-            _emailSender.SendEmailAsync(
+            await _emailSender.SendEmailAsync(
               UserConstants.AdminEmail,
                $"Hospital manager message from {contactModel.Input.Name} with email {contactModel.Input.Email}",
                contactModel.Input.Problem);
