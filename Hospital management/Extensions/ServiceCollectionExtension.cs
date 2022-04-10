@@ -1,4 +1,6 @@
-﻿using HM.Infrastructure.Data;
+﻿using HM.Core.Contracts;
+using HM.Core.Services;
+using HM.Infrastructure.Data;
 using HM.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
