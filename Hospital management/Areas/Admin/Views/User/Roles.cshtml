@@ -1,0 +1,36 @@
+﻿@using HM.Core.Models
+@model UserRolesViewModel
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<div class="row">
+    <div class="col-4">
+        <div class="form-group">
+            <form id="roles" method="post">
+                <input type="hidden" name="id" value="@Model.UserId" />
+
+                <div class="form-floating">
+                    <h3>Selected user: @Html.DisplayFor(m => m.Name)</h3>
+                </div>
+                <label>Select roles:</label>
+                <select asp-for="RoleNames" class="js-example-basic-multiple" multiple="multiple" data-placeholder="Roles" style="width: 100%;" aria-hidden="true">
+                    @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.RoleItems)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+            $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
+</script>
+}

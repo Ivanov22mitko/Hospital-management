@@ -15,6 +15,11 @@ namespace HM.Core.Services
             repo = _repo;
         }
 
+        public Task<ApplicationUser> GetUserById(string id)
+        {
+            return repo.GetByIdAsync<ApplicationUser>(id);
+        }
+
         public async Task<IEnumerable<UserListViewModel>> GetUsers()
         {
             return await repo.All<ApplicationUser>()
@@ -27,12 +32,31 @@ namespace HM.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<bool> UpdateUser(UserEditViewModel model)
+        {
+            bool result = false;
+            var user = await repo.GetByIdAsync<ApplicationUser>(model.Id);
+
+            if (user != null)
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+
+                await repo.SaveChangesAsync();
+
+                result = true;
+            }
+
+            return result;
+        }
+
         public async Task<UserEditViewModel> UserEdit(string id)
         {
             var user = await repo.GetByIdAsync<ApplicationUser>(id);
 
             return new UserEditViewModel()
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName
             };

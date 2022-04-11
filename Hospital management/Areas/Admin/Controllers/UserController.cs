@@ -1,7 +1,10 @@
 ﻿using HM.Core.Contracts;
+using HM.Core.Models;
 using HM.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.Json;
 
 namespace Hospital_management.Areas.Admin.Controllers
 {
@@ -23,6 +26,28 @@ namespace Hospital_management.Areas.Admin.Controllers
             service = _service;
         }
 
+        public async Task<IActionResult> Roles(string id)
+        {
+            var user = await service.GetUserById(id);
+            var model = new UserRolesViewModel()
+            {
+                UserId = user.Id,
+                Name = $"{user.FirstName} {user.LastName}"
+            };
+
+            ViewBag.RoleItems = roleManager.Roles
+                .ToList()
+                .Select(r => new SelectListItem()
+                {
+                    Text = r.Name,
+                    Value = r.Id,
+                    Selected = userManager.IsInRoleAsync(user, r.Name).Result
+                })
+                .ToList();
+
+            return View(model);
+        }
+
         public async Task<IActionResult> ManageUsers()
         {
             var users = await service.GetUsers();
@@ -32,14 +57,38 @@ namespace Hospital_management.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(string id)
         {
-            var model = service.UserEdit(id);
+            var model = await service.UserEdit(id);
 
-            return View(model); //TEST THIS
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, UserEditViewModel model)
+        {
+            if (!ModelState.IsValid || id != model.Id)
+            {
+                return View(model);
+            }
+
+            if (await service.UpdateUser(model))
+            {
+                return Ok();
+            }
+
+            return View(model);
         }
         
         public async Task<IActionResult> Save(string id)
         {
-            return Ok(id); //SAVE USER DATA
+            var userData = await service.GetUserById(id);
+
+            var fileName = $"{userData.FirstName}_{userData.LastName}.json";
+
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(JsonSerializer.Serialize(userData));
+
+            var content = new MemoryStream(bytes);
+
+            return File(content, "application/json", fileName);
         }
 
         //Create role
@@ -47,7 +96,7 @@ namespace Hospital_management.Areas.Admin.Controllers
         {
             //await roleManager.CreateAsync(new IdentityRole
             //{
-            //    Name = "Administrator"
+            //    Name = "Patient"
             //});
 
             return Ok();
