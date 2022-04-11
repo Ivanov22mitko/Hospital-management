@@ -13,7 +13,18 @@ namespace HM.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Doctor> Doctors { get; set; }
+
+        public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<Referral> Referrals { get; set; }
+
+        public DbSet<Disease> Diseases { get; set; }
+
+        public DbSet<Appointment> Appointments { get; set; }
     }
 }
