@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using HM.Core.Constants;
 using HM.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -101,7 +102,11 @@ namespace Hospital_management.Areas.Identity.Pages.Account
 
             [DataType(DataType.Text)]
             [Display(Name = "Register as:")]
+            //TO DO Custom attribute for roles
             public string Role { get; set; }
+
+            [RegularExpression("^[A-z0-9]{15}$", ErrorMessage = "Invalid Code")]
+            public string DoctorCode { get; set; }
         }
 
 
@@ -119,13 +124,15 @@ namespace Hospital_management.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                await AddToRole(user, Input.DoctorCode);
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("User created a new account with password.");                   
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -134,7 +141,7 @@ namespace Hospital_management.Areas.Identity.Pages.Account
                         "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                        protocol: Request.Scheme);                
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -180,6 +187,22 @@ namespace Hospital_management.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
+        }
+
+        public async Task AddToRole(ApplicationUser user, string doctorCode)
+        {
+            if (Input.Role == UserConstants.Roles.Patient)
+            {
+                await _userManager.AddToRoleAsync(user, UserConstants.Roles.Patient);
+            }
+            else if (Input.Role == UserConstants.Roles.Doctor && Input.DoctorCode == UserConstants.DoctorCode)
+            {
+                await _userManager.AddToRoleAsync(user, UserConstants.Roles.Doctor);
+            }
+            else
+            {
+                throw new Exception("Code not valid.");
+            }
         }
     }
 }

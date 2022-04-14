@@ -1,4 +1,5 @@
 ﻿@page
+@using HM.Core.Constants
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -26,15 +27,18 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <label asp-for="Input.Role"></label>
-                <input asp-for="Input.Role" type="radio" name="role" id="doctorRole" value="Doctor" />
+                
+                <input type="radio" name="role" id="doctorRole" value="Doctor" />
                 <label for="doctorRole">Doctor</label>
-                <input asp-for="Input.Role" type="radio" name="role" id="patientRole" value="Patient" />
+                <input type="radio" name="role" id="patientRole" value="Patient" />
                 <label for="patientRole">Patient</label>
+
+                <input type="hidden" asp-for="Input.Role" id="role"/>
 
                 <div class="form-check" id="doctorCode" style="display:none">
                     <label>Insert the authentication code:</label>
-                    <input class="form-control" autocomplete="new-password" aria-required="true"/>
+                    <input asp-for="Input.DoctorCode" class="form-control" aria-required="true"/>
+                    <span asp-validation-for="Input.DoctorCode" class="text-danger"></span>
                 </div>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
@@ -48,10 +52,12 @@
         $(function() {
             $('input[name="role"]').on('click', function() {
                 if ($(this).val() == 'Doctor') {
-                    $('#doctorCode').show();            
+                    $('#doctorCode').show();   
+                    $('#role').val('Doctor');
                 }
                 else {
                     $('#doctorCode').hide();
+                    $('#role').val('Patient');
                 }
             });
         });

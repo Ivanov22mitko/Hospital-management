@@ -1,0 +1,22 @@
+﻿@using HM.Core.Constants
+@if (User.IsInRole(UserConstants.Roles.Doctor))
+{
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="/Doctor/Scedule" class="nav-link">Schedule</a>
+    </li>
+
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="/Doctor/Patients" class="nav-link">Last Patients</a>
+    </li>
+}
+
+@if (User.IsInRole(UserConstants.Roles.Patient))
+{
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="/Patient/Appointment" class="nav-link">Appointments</a>
+    </li>
+
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="/Patient/SetAppointment" class="nav-link">Set appointment</a>
+    </li>
+}
