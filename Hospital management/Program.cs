@@ -25,6 +25,11 @@ builder.Services.AddApplicationServices();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeAreaFolder("Identity", "/Manage");
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

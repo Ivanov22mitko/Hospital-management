@@ -25,6 +25,8 @@ namespace HM.Infrastructure.Data
 
         public DbSet<Disease> Diseases { get; set; }
 
+        public DbSet<Laboratory> Laboratories { get; set; }
+
         public DbSet<Appointment> Appointments { get; set; }
     }
 }

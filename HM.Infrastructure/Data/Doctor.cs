@@ -7,6 +7,7 @@ namespace HM.Infrastructure.Data
         public Doctor()
         {
             Appointments = new List<Appointment>();
+            Referrals = new List<Referral>();
         }
 
         [Key]
@@ -28,6 +29,10 @@ namespace HM.Infrastructure.Data
         [StringLength(20)]
         public string Specialization { get; set; }
 
+        public Laboratory Laboratory { get; set; }
+
         public IEnumerable<Appointment> Appointments { get; set; }
+
+        public IEnumerable<Referral> Referrals { get; set; }
     }
 }

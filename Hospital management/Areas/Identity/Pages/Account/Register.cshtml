@@ -12,6 +12,16 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" autocomplete="username" aria-required="true" />             
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" autocomplete="username" aria-required="true" />             
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />             
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -26,14 +36,13 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />               
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <label asp-for"Input.Role"></label>
             <div class="form-floating">
-                
+                <input type="hidden" asp-for="Input.Role" id="role"/>
                 <input type="radio" name="role" id="doctorRole" value="Doctor" />
                 <label for="doctorRole">Doctor</label>
                 <input type="radio" name="role" id="patientRole" value="Patient" />
                 <label for="patientRole">Patient</label>
-
-                <input type="hidden" asp-for="Input.Role" id="role"/>
 
                 <div class="form-check" id="doctorCode" style="display:none">
                     <label>Insert the authentication code:</label>

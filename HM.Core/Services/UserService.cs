@@ -15,9 +15,9 @@ namespace HM.Core.Services
             repo = _repo;
         }
 
-        public Task<ApplicationUser> GetUserById(string id)
+        public async Task<ApplicationUser> GetUserById(string id)
         {
-            return repo.GetByIdAsync<ApplicationUser>(id);
+            return await repo.GetByIdAsync<ApplicationUser>(id);
         }
 
         public async Task<IEnumerable<UserListViewModel>> GetUsers()

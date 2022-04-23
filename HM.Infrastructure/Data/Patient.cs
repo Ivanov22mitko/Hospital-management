@@ -7,6 +7,7 @@ namespace HM.Infrastructure.Data
         public Patient()
         {
             Appointments = new List<Appointment>();
+            Referrals = new List<Referral>();
         }
 
         [Key]
@@ -30,5 +31,7 @@ namespace HM.Infrastructure.Data
         public IEnumerable<Appointment> Appointments { get; set; }
 
         public IEnumerable<Disease> Diseases { get; set; }
+
+        public IEnumerable<Referral> Referrals { get; set; }
     }
 }

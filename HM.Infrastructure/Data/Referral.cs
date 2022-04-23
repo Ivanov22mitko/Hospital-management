@@ -23,5 +23,12 @@ namespace HM.Infrastructure.Data
 
         [Required]
         public string Specialist { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(DoctorId))]
+        public Doctor Doctor { get; set; }
+
+        [Required]
+        public string DoctorId { get; set; }
     }
 }

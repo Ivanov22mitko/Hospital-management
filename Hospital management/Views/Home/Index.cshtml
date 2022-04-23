@@ -1,8 +1,14 @@
-﻿@{
+﻿@using HM.Infrastructure.Data.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Hospital management</h1>
-    <p><a href="/Identity/Account/Login">Login</a> or <a href="/Identity/Account/Register">register</a> to unlock the functionality of the site.</p>
+    @if(!SignInManager.IsSignedIn(User))
+    {
+        <p><a href="/Identity/Account/Login">Login</a> or <a href="/Identity/Account/Register">register</a> to unlock the functionality of the site.</p>
+    } 
 </div>
