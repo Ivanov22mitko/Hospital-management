@@ -2,7 +2,7 @@
 <aside class="control-sidebar control-sidebar-dark">
     <div class="p-3">
         <h5>Profile</h5>
-        <img src="~/img/user2-160x160.jpg" class="img-circle elevation-2 profile-user-img sidebar-profile-pic" alt="User Image">
+        <img gravatar-email="@User.Identity?.Name" gravatar-size="80" class="img-circle elevation-2 profile-user-img sidebar-profile-pic" alt="My Gravatar" />
         <div class="user-panel mb-3 d-flex">
             <div class="info">
                 <a href="#" class="d-block">@User.Identity?.Name</a>
