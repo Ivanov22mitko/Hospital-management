@@ -1,0 +1,87 @@
+﻿@using HM.Core.Models.Disease
+@model IEnumerable<DiseaseListViewModel>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-header">
+                <div class="row">
+                    <h3>Registered diseases</h3>
+                    <a asp-area="Admin" asp-action="AddDisease" asp-controller="Disease" class="btn btn-light ml-auto">Add new disease</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="tableDiseases" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th class="sorting" style="cursor:pointer" onclick="sortTable(0)" rowspan="1" colspan="1">ICD</th>
+                                    <th class="sorting" style="cursor:pointer" onclick="sortTable(1)" rowspan="1" colspan="1">Name</th>
+                                    <th style="width:5%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var disease in Model)
+                                {
+                                    <tr>
+                                        <td>@disease.ICD</td>
+                                        <td>@disease.Name</td>
+                                        <td>
+                                            <a asp-area="Admin" asp-controller="Disease" asp-action="Remove" asp-route-id="@disease.Id.ToString()" class="btn">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function sortTable(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("tableDiseases");
+      switching = true;
+      dir = "asc";
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          switchcount ++;
+        } else {
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+</script>
+}

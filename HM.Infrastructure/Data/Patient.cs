@@ -26,7 +26,8 @@ namespace HM.Infrastructure.Data
         public string Email { get; set; }
 
         [Required]
-        public string Number { get; set; }
+        [Phone]
+        public string PhoneNumber { get; set; }
 
         public IEnumerable<Appointment> Appointments { get; set; }
 

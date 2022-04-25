@@ -9,6 +9,10 @@
     <li class="nav-item d-none d-sm-inline-block">
         <a href="/Doctor/Patients" class="nav-link">Last Patients</a>
     </li>
+
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="/Doctor/Patients" class="nav-link">Refferal</a>
+    </li>
 }
 
 @if (User.IsInRole(UserConstants.Roles.Patient))
@@ -19,5 +23,9 @@
 
     <li class="nav-item d-none d-sm-inline-block">
         <a href="/Patient/SetAppointment" class="nav-link">Set appointment</a>
+    </li>
+
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="/Patient/SetAppointment" class="nav-link">Refferals</a>
     </li>
 }

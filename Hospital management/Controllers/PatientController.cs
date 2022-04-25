@@ -16,5 +16,10 @@ namespace Hospital_management.Controllers
         {
             return Ok();
         }
+
+        public IActionResult Referrals()
+        {
+            return Ok();
+        }
     }
 }
