@@ -87,7 +87,7 @@ namespace Hospital_management.Areas.Admin.Controllers
 
             if (await service.UpdateUser(model))
             {
-                return Ok();
+                return Redirect("/Admin/ManageUsers");
             }
 
             return View(model);

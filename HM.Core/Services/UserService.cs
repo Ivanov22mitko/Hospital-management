@@ -33,6 +33,7 @@ namespace HM.Core.Services
                 .ToListAsync();
         }
 
+        //IMPORTANT FOR DOCTOR AND PATIENT
         public async Task PopulateEntities(string role, ApplicationUser user)
         {
             if (role == "Patient")

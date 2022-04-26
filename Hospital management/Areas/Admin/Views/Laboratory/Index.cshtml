@@ -1,0 +1,50 @@
+﻿@using HM.Core.Models.Laboratory
+@model IEnumerable<LaboratoryListViewModel>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <h3>Laboratories</h3>
+            <a asp-area="Admin" asp-action="AddLaboratory" asp-controller="Laboratory" class="btn btn-light ml-auto">Add new laboratory</a>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="row row-cols-1 row-cols-md-3">
+
+            @foreach(var lab in Model)
+            {
+                <div class="col-md-3">
+
+                <div class="card card-widget widget-user">
+                    <div class="widget-user-header bg-info">
+                        <div class="card-tools" style="text-align:right">
+                            <button id="icon" onclick="changeIcon()" type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <h3>@lab.Name</h3>
+                    </div>
+
+                    <div class="card-footer" style="padding:12px">
+                        @lab.Description
+                        <div class="row">
+                            <a asp-controller="Laboratory" asp-action="Manage" asp-route-id="@lab.Id" class="btn btn-default btn-block">Manage</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            }           
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+<script>
+    function changeIcon() {
+        $('#icon').find("i").toggleClass("fa-minus fa-plus");
+    }
+</script>
+}
