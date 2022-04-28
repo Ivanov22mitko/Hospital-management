@@ -1,6 +1,7 @@
 ﻿using HM.Core.Contracts;
 using HM.Core.Models.Laboratory;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hospital_management.Areas.Admin.Controllers
 {
@@ -44,7 +45,13 @@ namespace Hospital_management.Areas.Admin.Controllers
             var operators = await doctorService.GetDoctors();
 
             ViewBag.Operators = operators
-                .Select(o => o.Specialization == model.Name)
+                .Where(o => o.Specialization == model.Name)
+                .Select(o => new SelectListItem()
+                {
+                    Text = $"{o.FirstName} {o.LastName}",
+                    Value = $"{o.FirstName} {o.LastName}",
+                    Selected = model.Operators.Contains(o)
+                })
                 .ToList();
 
             return View(model);

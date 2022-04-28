@@ -31,39 +31,7 @@ namespace HM.Core.Services
                     Email = u.Email
                 })
                 .ToListAsync();
-        }
-
-        //IMPORTANT FOR DOCTOR AND PATIENT
-        public async Task PopulateEntities(string role, ApplicationUser user)
-        {
-            if (role == "Patient")
-            {
-                await repo.AddAsync<Patient>(new Patient()
-                {
-                    Id=user.Id,
-                    FirstName= user.FirstName,
-                    LastName= user.LastName,
-                    Email= user.Email,
-                    PhoneNumber = user.PhoneNumber
-                });
-            }
-
-            if (role == "Doctor")
-            {
-                await repo.AddAsync<Doctor>(new Doctor()
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email
-                });
-            }
-
-            else
-            {
-                throw new ArgumentException("Invalid role.");
-            }
-        }
+        }    
 
         public async Task<bool> UpdateUser(UserEditViewModel model)
         {

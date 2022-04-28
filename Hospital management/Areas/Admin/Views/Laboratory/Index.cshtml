@@ -16,11 +16,11 @@
             {
                 <div class="col-md-3">
 
-                <div class="card card-widget widget-user">
+                <div class="card card-widget widget-user collapsed-card">
                     <div class="widget-user-header bg-info">
                         <div class="card-tools" style="text-align:right">
-                            <button id="icon" onclick="changeIcon()" type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
+                            <button id="icon" type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
                         <h3>@lab.Name</h3>
@@ -43,8 +43,9 @@
 
 @section Scripts {
 <script>
-    function changeIcon() {
-        $('#icon').find("i").toggleClass("fa-minus fa-plus");
-    }
+    $('.btn-tool').click(function() {
+    $("i", this).toggleClass("fa-plus fa-minus");
+});
+    
 </script>
 }

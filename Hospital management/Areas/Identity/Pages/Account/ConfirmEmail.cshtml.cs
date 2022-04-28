@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HM.Core.Contracts;
 using HM.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,10 +19,13 @@ namespace Hospital_management.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IDoctorService _doctorService;
 
-        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
+        public ConfirmEmailModel(UserManager<ApplicationUser> userManager,
+            IDoctorService doctorService)
         {
             _userManager = userManager;
+            _doctorService = doctorService;
         }
 
         /// <summary>
@@ -42,6 +46,9 @@ namespace Hospital_management.Areas.Identity.Pages.Account
             {
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
+
+            await _doctorService.PopulateEntities(_userManager.IsInRoleAsync(user, "Patient").Result ? "Patient" : "Doctor",
+                user);
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);

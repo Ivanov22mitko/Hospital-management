@@ -1,5 +1,62 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using HM.Core.Models.Laboratory
+@model LaboratoryManageViewModel
 @{
+    var doctors = (List<SelectListItem>)ViewBag.Operators;
+}
+
+<form id="demoform" method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-floating">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" aria-required="true" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Description" class="form-label"></label>
+                <input asp-for="Description" class="form-control" aria-required="true" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card card-default mt-3">
+        <div class="card-header">
+            <h3 class="card-title">Operators</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <select asp-for="Operators" asp-items="@doctors" class="duallistbox" name="duallistbox_demo1[]" multiple="multiple" style="display: none;"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
+    </div>
+</form>
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial" />
+<script>
+    var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+        nonSelectedListLabel: 'Aviable',
+        selectedListLabel: 'Active'
+    });
+    $("#demoform").submit(function() {
+      @Model.Operators = $('[name="duallistbox_demo1[]"]').val();
+      return false;
+    });
+
+</script>
 }
