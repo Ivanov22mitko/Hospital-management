@@ -16,14 +16,18 @@ namespace Hospital_management.Areas.Admin.Controllers
 
         private readonly IUserService service;
 
+        private readonly IPeopleService peopleService;
+
         public UserController(
             RoleManager<IdentityRole> _roleManager,
             UserManager<ApplicationUser> _userManager,
-            IUserService _service)
+            IUserService _service,
+            IPeopleService _peopleService)
         {
             roleManager = _roleManager;
             userManager = _userManager;
             service = _service;
+            peopleService = _peopleService;
         }
 
         public async Task<IActionResult> Roles(string id)
@@ -87,7 +91,15 @@ namespace Hospital_management.Areas.Admin.Controllers
 
             if (await service.UpdateUser(model))
             {
-                return Redirect("/Admin/ManageUsers");
+                if (model.Role == "Doctor")
+                {
+                    await peopleService.UpdateDoctor(model);
+                }
+                else
+                {
+                    await peopleService.UpdatePatient(model);
+                }
+                return Redirect("/Admin/User/ManageUsers");
             }
 
             return View(model);

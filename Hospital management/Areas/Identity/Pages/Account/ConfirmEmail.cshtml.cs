@@ -19,13 +19,13 @@ namespace Hospital_management.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IDoctorService _doctorService;
+        private readonly IPeopleService _peopleService;
 
         public ConfirmEmailModel(UserManager<ApplicationUser> userManager,
-            IDoctorService doctorService)
+            IPeopleService peopleService)
         {
             _userManager = userManager;
-            _doctorService = doctorService;
+            _peopleService = peopleService;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Hospital_management.Areas.Identity.Pages.Account
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
-            await _doctorService.PopulateEntities(_userManager.IsInRoleAsync(user, "Patient").Result ? "Patient" : "Doctor",
+            await _peopleService.PopulateEntities(_userManager.IsInRoleAsync(user, "Patient").Result ? "Patient" : "Doctor",
                 user);
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));

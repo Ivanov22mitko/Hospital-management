@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using HM.Core.Contracts;
 using HM.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,16 @@ namespace Hospital_management.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IPeopleService _peopleService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IPeopleService peopleService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _peopleService = peopleService;
         }
 
         public string Username { get; set; }
@@ -110,6 +114,15 @@ namespace Hospital_management.Areas.Identity.Pages.Account.Manage
             }
 
             await _userManager.UpdateAsync(user);
+
+            if (await _userManager.IsInRoleAsync(user, "Doctor"))
+            {
+                await _peopleService.UpdateInfoDoctor(user);
+            }
+            if (await _userManager.IsInRoleAsync(user, "Patient"))
+            {
+                await _peopleService.UpdateInfoPatient(user);
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

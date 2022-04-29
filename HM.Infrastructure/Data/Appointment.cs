@@ -28,5 +28,8 @@ namespace HM.Infrastructure.Data
         [Required]
         [StringLength(100)]
         public string Reason { get; set; }
+
+        [Required]
+        public string Status { get; set; }
     }
 }

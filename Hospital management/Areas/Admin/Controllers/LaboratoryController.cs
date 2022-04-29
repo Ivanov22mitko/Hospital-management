@@ -9,13 +9,13 @@ namespace Hospital_management.Areas.Admin.Controllers
     {
         private readonly ILaboratoryService service;
 
-        private readonly IDoctorService doctorService;
+        private readonly IPeopleService peopleService;
 
         public LaboratoryController(ILaboratoryService _service,
-            IDoctorService _doctorService)
+            IPeopleService _peopleService)
         {
             service = _service;
-            doctorService = _doctorService;
+            peopleService = _peopleService;
         }
 
         public async Task<IActionResult> Index()
@@ -42,15 +42,15 @@ namespace Hospital_management.Areas.Admin.Controllers
         {
             var model = await service.ManageLaboratory(id);
 
-            var operators = await doctorService.GetDoctors();
+            var operators = await peopleService.GetDoctors();
 
             ViewBag.Operators = operators
                 .Where(o => o.Specialization == model.Name)
                 .Select(o => new SelectListItem()
                 {
                     Text = $"{o.FirstName} {o.LastName}",
-                    Value = $"{o.FirstName} {o.LastName}",
-                    Selected = model.Operators.Contains(o)
+                    Value = o.Id,
+                    Selected = o.LaboratoryId == model.Id
                 })
                 .ToList();
 

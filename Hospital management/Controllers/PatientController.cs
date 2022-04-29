@@ -7,11 +7,6 @@ namespace Hospital_management.Controllers
     [Authorize(Roles = UserConstants.Roles.Patient)]
     public class PatientController : Controller
     {
-        public IActionResult Appointments()
-        {
-            return Ok();
-        }
-
         public IActionResult SetAppointment()
         {
             return Ok();

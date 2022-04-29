@@ -3,6 +3,7 @@ using HM.Core.Models;
 using HM.Infrastructure.Data;
 using HM.Infrastructure.Data.Identity;
 using HM.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HM.Core.Services
@@ -10,10 +11,13 @@ namespace HM.Core.Services
     public class UserService : IUserService
     {
         private readonly IApplicationDbRepository repo;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public UserService(IApplicationDbRepository _repo)
+        public UserService(IApplicationDbRepository _repo,
+            UserManager<ApplicationUser> _userManager)
         {
             repo = _repo;
+            userManager = _userManager;
         }
 
         public async Task<ApplicationUser> GetUserById(string id)
@@ -55,11 +59,14 @@ namespace HM.Core.Services
         {
             var user = await repo.GetByIdAsync<ApplicationUser>(id);
 
+            string role = await userManager.IsInRoleAsync(user, "Patient") ? "Patient" : "Doctor";
+
             return new UserEditViewModel()
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Role = role
             };
         }
     }

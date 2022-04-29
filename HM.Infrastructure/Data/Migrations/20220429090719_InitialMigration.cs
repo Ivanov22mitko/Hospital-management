@@ -193,7 +193,7 @@ namespace HM.Infrastructure.Migrations
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Specialization = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    LaboratoryId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    LaboratoryId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,7 +202,8 @@ namespace HM.Infrastructure.Migrations
                         name: "FK_Doctors_Laboratories_LaboratoryId",
                         column: x => x.LaboratoryId,
                         principalTable: "Laboratories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

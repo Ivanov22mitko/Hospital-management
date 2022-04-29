@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HM.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220423134912_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220429112320_EntityUpdated")]
+    partial class EntityUpdated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,10 @@ namespace HM.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -430,11 +434,9 @@ namespace HM.Infrastructure.Migrations
 
             modelBuilder.Entity("HM.Infrastructure.Data.Doctor", b =>
                 {
-                    b.HasOne("HM.Infrastructure.Data.Laboratory", "Laboratory")
+                    b.HasOne("HM.Infrastructure.Data.Laboratory", null)
                         .WithMany("Operators")
                         .HasForeignKey("LaboratoryId");
-
-                    b.Navigation("Laboratory");
                 });
 
             modelBuilder.Entity("HM.Infrastructure.Data.Referral", b =>

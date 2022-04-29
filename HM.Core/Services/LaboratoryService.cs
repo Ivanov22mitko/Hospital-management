@@ -42,7 +42,7 @@ namespace HM.Core.Services
                 Id = laboratory.Id,
                 Name = laboratory.Name,
                 Description = laboratory.Description,
-                Operators = laboratory.Operators
+                Operators = laboratory.Operators.Select(o => o.Id).ToArray()
             };
         }
 
@@ -50,6 +50,10 @@ namespace HM.Core.Services
         {
             bool result = false;
             var laboratory = await repo.GetByIdAsync<Laboratory>(model.Id);
+            var operators = await repo.All<Doctor>()
+                .Where(d => model.Operators
+                .Contains(d.Id))
+                .ToListAsync();
 
             if (laboratory != null)
             {
@@ -57,7 +61,7 @@ namespace HM.Core.Services
 
                 laboratory.Description = model.Description;
 
-                laboratory.Operators = model.Operators;
+                laboratory.Operators = operators;
 
                 await repo.SaveChangesAsync();
 

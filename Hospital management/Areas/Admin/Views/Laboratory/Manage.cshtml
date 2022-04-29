@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <select asp-for="Operators" asp-items="@doctors" class="duallistbox" name="duallistbox_demo1[]" multiple="multiple" style="display: none;"></select>
+                        <select asp-for="Operators" asp-items="@doctors" class="duallistbox form-control" id="DualListBox" multiple="multiple" style="display: none;"></select>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
     </div>
 
     <div>
-        <button type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
+        <button type="submit"  class="w-100 btn btn-lg btn-primary">Submit</button>
     </div>
 </form>
 
@@ -49,14 +49,9 @@
 {
 <partial name="_ValidationScriptsPartial" />
 <script>
-    var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+    var demo1 = $('#DualListBox').bootstrapDualListbox({
         nonSelectedListLabel: 'Aviable',
         selectedListLabel: 'Active'
-    });
-    $("#demoform").submit(function() {
-      @Model.Operators = $('[name="duallistbox_demo1[]"]').val();
-      return false;
-    });
-
+    }); 
 </script>
 }

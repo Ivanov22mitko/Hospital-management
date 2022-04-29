@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using HM.Core.Models.Appointment
+@model AddAppointmentViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="add" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PatientId" value="@User.Identity.Id"/>
+
+            <div class="form-group">
+                <select class="js-example-basic-single" name="doctor">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+
+            <div class="form-floating">
+                <label asp-for="Description" class="form-label"></label>
+                <input asp-for="Description" class="form-control" aria-required="true" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div>
+                <button type="submit" class="w-100 btn btn-lg btn-primary" asp-controller="Laboratory" asp-action="Add">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial" />
+<script>
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
 }

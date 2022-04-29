@@ -29,7 +29,7 @@ namespace HM.Infrastructure.Data
         [StringLength(20)]
         public string Specialization { get; set; }
 
-        public Laboratory Laboratory { get; set; }
+        public string? LaboratoryId { get; set; }
 
         public IEnumerable<Appointment> Appointments { get; set; }
 
