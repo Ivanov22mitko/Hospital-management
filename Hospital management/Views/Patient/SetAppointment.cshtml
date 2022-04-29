@@ -1,26 +1,34 @@
 ﻿@using HM.Core.Models.Appointment
 @model AddAppointmentViewModel
 
+
 <div class="row">
     <div class="col-md-4">
         <form id="add" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PatientId" value="@User.Identity.Id"/>
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="PatientId" type="hidden" />
+            <input asp-for="Status" type="hidden" />
 
             <div class="form-group">
-                <select class="js-example-basic-single" name="doctor">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                </select>
+                <label class="form-label">Choose Doctor</label>
+                <select asp-for="DoctorId" asp-items="@ViewBag.Doctors" class="js-example-basic-single form-control"></select>
             </div>
 
             <div class="form-floating">
-                <label asp-for="Description" class="form-label"></label>
-                <input asp-for="Description" class="form-control" aria-required="true" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Reason" class="form-label"></label>
+                <input asp-for="Reason" class="form-control" aria-required="true" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
+
+            <div class="form-floating">
+                <label class="form-label">Appointment Time</label>
+                <input asp-for="AppointmentTime" placeholder="mm/dd/yyyy" textmode="DateTime" class="form-control" aria-required="true" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+
             <div>
-                <button type="submit" class="w-100 btn btn-lg btn-primary" asp-controller="Laboratory" asp-action="Add">Submit</button>
+                <button type="submit" class="w-100 btn btn-lg btn-primary" asp-controller="Patient" asp-action="AddAppointment">Submit</button>
             </div>
         </form>
     </div>

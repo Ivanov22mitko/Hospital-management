@@ -1,14 +1,14 @@
-﻿@using HM.Core.Models.Referral
-@model IEnumerable<ReferralListViewModel>
+﻿@using HM.Core.Models.Appointment
+@model IEnumerable<PatientAppointmentListViewModel>
 @{
-    ViewData["Title"] = "Referrals";
+    ViewData["Title"] = "My Appointments";
 }
 
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">My referrals</h3>
+                <h3 class="card-title">Apppointments</h3>
                 <div class="card-tools">
                 </div>
             </div>
@@ -17,18 +17,20 @@
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                            <th>From</th>
-                            <th>Due</th>
-                            <th>Specialist</th>
+                            <th>Time</th>
+                            <th>Doctor</th>
+                            <th>Reason</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var referral in Model)
+                        @foreach (var appointment in Model)
                         {
                             <tr>
-                                <td>@referral.FromDate</td>
-                                <td>@referral.DueDate</td>
-                                <td>@referral.Specialist</td>                     
+                                <td>@appointment.Date</td>
+                                <td>@appointment.DoctorName</td>
+                                <td>@appointment.Reason</td>
+                                <td>@appointment.Status</td>
                             </tr>
                         }
                     </tbody>

@@ -1,5 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using HM.Core.Models.Referral
+@model AddReferralViewModel
 @{
+    ViewData["Title"] = "Give referral";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="add" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="PatientId" type="hidden" />
+            <input asp-for="DoctorId" type="hidden" />
+
+            <div class="form-floating">
+                <label asp-for="Specialist" class="form-label"></label>
+                <input asp-for="Specialist" class="form-control" aria-required="true" />
+                <span asp-validation-for="Specialist" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label class="form-label">From</label>
+                <input asp-for="FromDate" placeholder="mm/dd/yyyy" textmode="Date" class="form-control" aria-required="true" />
+                <span asp-validation-for="FromDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <label class="form-label">Due</label>
+                <input asp-for="DueDate" placeholder="mm/dd/yyyy" textmode="Date" class="form-control" aria-required="true" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+
+            <div>
+                <button type="submit" class="w-100 btn btn-lg btn-primary" asp-controller="Doctor" asp-action="AddReferral">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial" />
+
 }

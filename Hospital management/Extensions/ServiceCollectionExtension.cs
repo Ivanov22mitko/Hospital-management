@@ -15,6 +15,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IDiseaseService, DiseaseService>();
             services.AddScoped<ILaboratoryService, LaboratoryService>();
             services.AddScoped<IPeopleService, PeopleService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IReferralService, ReferralService>();
 
             return services;
         }

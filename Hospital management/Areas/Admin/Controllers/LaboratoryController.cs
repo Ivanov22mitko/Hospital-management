@@ -33,6 +33,11 @@ namespace Hospital_management.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddLaboratoryViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             await service.AddLaboratoryToDb(model);
 
             return Redirect("/Admin/Laboratory/");

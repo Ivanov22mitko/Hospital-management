@@ -1,5 +1,51 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using HM.Core.Models.Appointment
+@model IEnumerable<AppointmentListViewModel>
 @{
+    ViewData["Title"] = "My Schedule";
 }
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Apppointments</h3>
+                <div class="card-tools">
+                </div>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th>Reason</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var appointment in Model)
+                        {
+                            <tr>
+                                <td>@appointment.Date</td>
+                                <td>@appointment.PatientName</td>
+                                <td>@appointment.Reason</td>
+                                <td>
+                                    <a asp-action="Referral" asp-controller="Doctor" asp-route-id="@appointment.PatientId" class="btn">
+                                        <i class="fas fa-file"></i> Referral
+                                    </a>
+                                    <a asp-action="Complete" asp-controller="Doctor" asp-route-id="@appointment.Id" class="btn">
+                                        <i class="fas fa-check"></i> Done
+                                    </a>
+                                    <a asp-action="Remove" asp-controller="Doctor" asp-route-id="@appointment.Id" class="btn">
+                                        <i class="fas fa-times"></i> Remove
+                                    </a>               
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

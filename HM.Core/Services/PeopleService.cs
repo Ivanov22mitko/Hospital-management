@@ -43,7 +43,7 @@ namespace HM.Core.Services
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
-                    Specialization = "Add specialization"
+                    Specialization = "GP"
                 });
             }
 
