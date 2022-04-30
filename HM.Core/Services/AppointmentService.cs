@@ -90,6 +90,7 @@ namespace HM.Core.Services
                 {
                     Id = a.Id,
                     Reason = a.Reason,
+                    Status = a.Status,
                     Date = a.AppointmentTime,
                     PatientName = $"{a.Patient.FirstName} {a.Patient.LastName}",
                     PatientId = a.Patient.Id

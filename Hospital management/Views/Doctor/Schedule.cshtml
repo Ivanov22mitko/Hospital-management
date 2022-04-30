@@ -20,6 +20,7 @@
                             <th>Time</th>
                             <th>Patient</th>
                             <th>Reason</th>
+                            <th>Status</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -30,6 +31,7 @@
                                 <td>@appointment.Date</td>
                                 <td>@appointment.PatientName</td>
                                 <td>@appointment.Reason</td>
+                                <td>@appointment.Status</td>
                                 <td>
                                     <a asp-action="Referral" asp-controller="Doctor" asp-route-id="@appointment.PatientId" class="btn">
                                         <i class="fas fa-file"></i> Referral
