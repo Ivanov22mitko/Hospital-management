@@ -1,4 +1,5 @@
-﻿using HM.Core.Contracts;
+﻿using HM.Core.Constants;
+using HM.Core.Contracts;
 using HM.Core.Models;
 using HM.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -64,6 +65,8 @@ namespace Hospital_management.Areas.Admin.Controllers
                 await userManager.AddToRolesAsync(user, model.RoleNames);
             }
 
+            ViewData[MessageConstant.SuccessMessage] = "User roles updated.";
+
             return RedirectToAction(nameof(ManageUsers));
         }
 
@@ -86,6 +89,8 @@ namespace Hospital_management.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid || id != model.Id)
             {
+                ViewData[MessageConstant.ErrorMessage] = "Something went wrong.";
+
                 return View(model);
             }
 
@@ -99,6 +104,9 @@ namespace Hospital_management.Areas.Admin.Controllers
                 {
                     await peopleService.UpdatePatient(model);
                 }
+
+                ViewData[MessageConstant.SuccessMessage] = "User updated.";
+
                 return Redirect("/Admin/User/ManageUsers");
             }
 

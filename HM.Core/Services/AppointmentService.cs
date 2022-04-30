@@ -121,5 +121,17 @@ namespace HM.Core.Services
             await repo.DeleteAsync<Appointment>(id);
             await repo.SaveChangesAsync();
         }
+
+        public AddAppointmentViewModel SetAppointment(string patientId)
+        {
+            var appointment = new AddAppointmentViewModel()
+            {
+                Id = Guid.NewGuid().ToString(),
+                PatientId = patientId,
+                Status = "Pending"
+            };
+
+            return appointment;
+        }
     }
 }

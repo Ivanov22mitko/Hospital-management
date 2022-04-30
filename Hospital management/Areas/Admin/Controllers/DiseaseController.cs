@@ -1,4 +1,5 @@
-﻿using HM.Core.Contracts;
+﻿using HM.Core.Constants;
+using HM.Core.Contracts;
 using HM.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,12 +31,16 @@ namespace Hospital_management.Areas.Admin.Controllers
         {
             await service.AddDiseaseToDb(model);
 
+            ViewData[MessageConstant.SuccessMessage] = "Disease added!";
+
             return Redirect("/Admin/Disease/");
         }
 
         public async Task<IActionResult> Remove(string id)
         {
             await service.RemoveDiseaseFromDb(id);
+
+            ViewData[MessageConstant.SuccessMessage] = "Disease removed!";
 
             return Redirect("/Admin/Disease/");
         }

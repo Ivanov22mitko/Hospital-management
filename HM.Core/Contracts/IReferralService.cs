@@ -7,5 +7,7 @@ namespace HM.Core.Contracts
         Task GiveReferralTo(AddReferralViewModel model);
 
         Task<IEnumerable<ReferralListViewModel>> GetReferrals(string id);
+
+        AddReferralViewModel GetReferral(string patientId, string doctorId);
     }
 }

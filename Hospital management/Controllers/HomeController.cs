@@ -1,4 +1,5 @@
-﻿using Hospital_management.Models;
+﻿using HM.Core.Constants;
+using Hospital_management.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

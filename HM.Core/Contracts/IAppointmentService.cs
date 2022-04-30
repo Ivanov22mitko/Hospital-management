@@ -13,6 +13,8 @@ namespace HM.Core.Contracts
 
         Task AddAppointmentToDb(AddAppointmentViewModel model);
 
+        AddAppointmentViewModel SetAppointment(string patientId);
+
         Task CompleteAppointment(string id);
 
         Task RemoveAppointment(string id);

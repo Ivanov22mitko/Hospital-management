@@ -31,12 +31,7 @@ namespace Hospital_management.Controllers
         {
             var user = await userManager.FindByNameAsync(User.Identity?.Name);
 
-            var model = new AddAppointmentViewModel()
-            {
-                Id = Guid.NewGuid().ToString(),
-                PatientId = user.Id,
-                Status = "Pending"
-            };
+            var model = appointmentService.SetAppointment(user.Id);
 
             var doctors = await appointmentService.GetDoctorsGP();
 
@@ -54,10 +49,14 @@ namespace Hospital_management.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewData[MessageConstant.ErrorMessage] = "Something went wrong.";
+
                 return Redirect("/Patient/SetAppointment"); ;
             }
 
             await appointmentService.AddAppointmentToDb(model);
+
+            ViewData[MessageConstant.SuccessMessage] = "Appointment added.";
 
             return Redirect("/");
         }

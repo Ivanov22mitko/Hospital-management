@@ -1,4 +1,5 @@
-﻿using HM.Core.Contracts;
+﻿using HM.Core.Constants;
+using HM.Core.Contracts;
 using HM.Core.Models.Laboratory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -35,10 +36,14 @@ namespace Hospital_management.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewData[MessageConstant.ErrorMessage] = "Something went wrong.";
+
                 return View(model);
             }
 
             await service.AddLaboratoryToDb(model);
+
+            ViewData[MessageConstant.SuccessMessage] = "Laboratory created.";
 
             return Redirect("/Admin/Laboratory/");
         }
@@ -67,13 +72,19 @@ namespace Hospital_management.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid || id != model.Id)
             {
+                ViewData[MessageConstant.ErrorMessage] = "Something went wrong.";
+
                 return View(model);
             }
 
             if (await service.UpdateLaboratory(model))
             {
+                ViewData[MessageConstant.SuccessMessage] = "Laboratory updated.";
+
                 return Redirect("/Admin/Laboratory");
             }
+
+            ViewData[MessageConstant.ErrorMessage] = "Something went wrong.";
 
             return RedirectToAction(nameof(Manage));
         }

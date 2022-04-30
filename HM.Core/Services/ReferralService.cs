@@ -15,6 +15,18 @@ namespace HM.Core.Services
             repo = _repo;
         }
 
+        public AddReferralViewModel GetReferral(string patientId, string doctorId)
+        {
+            var model = new AddReferralViewModel()
+            {
+                Id = Guid.NewGuid().ToString(),
+                DoctorId = doctorId,
+                PatientId = patientId
+            };
+
+            return model;
+        }
+
         public async Task<IEnumerable<ReferralListViewModel>> GetReferrals(string id)
         {
             var referrals = await repo.All<Referral>()

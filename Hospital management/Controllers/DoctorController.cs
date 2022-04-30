@@ -39,12 +39,7 @@ namespace Hospital_management.Controllers
         {
             var doctor = await userManager.FindByNameAsync(User.Identity?.Name);
 
-            var model = new AddReferralViewModel()
-            {
-                Id = Guid.NewGuid().ToString(),
-                DoctorId = doctor.Id,
-                PatientId = id
-            };
+            var model = referralService.GetReferral(id, doctor.Id);
 
             return View(model);
         }
@@ -54,10 +49,14 @@ namespace Hospital_management.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewData[MessageConstant.ErrorMessage] = "Something went wrong.";
+
                 return Redirect("/Doctor/Schedule");
             }
 
             await referralService.GiveReferralTo(model);
+
+            ViewData[MessageConstant.SuccessMessage] = "Referral given.";
             
             return Redirect("/");
         }
@@ -66,12 +65,16 @@ namespace Hospital_management.Controllers
         {
             await appointmentService.CompleteAppointment(id);
 
+            ViewData[MessageConstant.SuccessMessage] = "Appointment completed.";
+
             return Redirect("/Doctor/Schedule");
         }
 
         public async Task<IActionResult> Remove(string id)
         {
             await appointmentService.RemoveAppointment(id);
+
+            ViewData[MessageConstant.SuccessMessage] = "Appointment removed.";
 
             return Redirect("/Doctor/Schedule");
         }
@@ -87,10 +90,14 @@ namespace Hospital_management.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewData[MessageConstant.ErrorMessage] = "Something went wrong.";
+
                 return Redirect("/Doctor/Schedule");
             }
 
             await appointmentService.SetDiagnose(model);
+
+            ViewData[MessageConstant.SuccessMessage] = "Patient diagnosed.";
 
             return Redirect("/Doctor/Schedule");
         }

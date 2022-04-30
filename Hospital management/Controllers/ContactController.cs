@@ -27,7 +27,9 @@ namespace Hospital_management.Controllers
                $"Hospital manager message from {contactModel.Input.Name} with email {contactModel.Input.Email}",
                contactModel.Input.Problem);
 
-            return View("/ContactForm");
+            ViewData[MessageConstant.SuccessMessage] = "Email sent!";
+
+            return Redirect("/Home/");
 
         }
     }
