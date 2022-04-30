@@ -1,0 +1,32 @@
+﻿@using HM.Core.Models.Appointment
+@model DiagnosePatientViewModel
+@{
+    ViewData["Title"] = $"Diagnosing: {Model.PatientName}";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="add" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="form-label">Choose Doctor</label>
+                <select asp-for="Disease" asp-items="@Model.Diseases" class="js-example-basic-single form-control"></select>
+            </div>
+
+            <div>
+                <button type="submit" class="w-100 btn btn-lg btn-primary" asp-controller="Doctor" asp-action="SetDiagnose">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial" />
+<script>
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
+}

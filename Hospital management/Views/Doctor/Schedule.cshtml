@@ -37,6 +37,9 @@
                                     <a asp-action="Complete" asp-controller="Doctor" asp-route-id="@appointment.Id" class="btn">
                                         <i class="fas fa-check"></i> Done
                                     </a>
+                                    <a asp-action="Diagnose" asp-controller="Doctor" asp-route-id="@appointment.PatientId" class="btn">
+                                        <i class="fas fa-stethoscope"></i> Diagnose
+                                    </a>
                                     <a asp-action="Remove" asp-controller="Doctor" asp-route-id="@appointment.Id" class="btn">
                                         <i class="fas fa-times"></i> Remove
                                     </a>               

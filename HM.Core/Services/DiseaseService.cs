@@ -29,6 +29,13 @@ namespace HM.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task<Disease> GetDiseaseByName(string name)
+        {
+            return await repo.All<Disease>()
+                .Where(d => d.Name == name)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<DiseaseListViewModel>> GetDiseases()
         {
             return await repo.All<Disease>()
@@ -39,6 +46,27 @@ namespace HM.Core.Services
                     Name = d.Name
                 })
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetDiseasesList()
+        {
+            return await repo.All<Disease>()
+                .Select(d => d.Name)
+                .ToArrayAsync();
+        }
+
+        public IEnumerable<string>? GetPatientDiseases(Patient patient)
+        {
+            if (patient.Diseases == null)
+            {
+                return null;
+            }
+            else
+            {
+                return patient.Diseases
+                .Select(d => d.Name)
+                .ToArray();
+            }          
         }
 
         public async Task RemoveDiseaseFromDb(string id)

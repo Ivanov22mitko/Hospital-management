@@ -1,5 +1,6 @@
 ﻿using HM.Core.Constants;
 using HM.Core.Contracts;
+using HM.Core.Models.Appointment;
 using HM.Core.Models.Referral;
 using HM.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +17,6 @@ namespace Hospital_management.Controllers
         private readonly IAppointmentService appointmentService;
 
         private readonly IReferralService referralService;
-
         public DoctorController(UserManager<ApplicationUser> _userManager,
             IAppointmentService _appointmentService,
             IReferralService _referralService)
@@ -72,6 +72,25 @@ namespace Hospital_management.Controllers
         public async Task<IActionResult> Remove(string id)
         {
             await appointmentService.RemoveAppointment(id);
+
+            return Redirect("/Doctor/Schedule");
+        }
+
+        public async Task<IActionResult> Diagnose(string id)
+        {
+            var model = await appointmentService.GetDiagnosePatient(id);
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> SetDiagnose(DiagnosePatientViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Redirect("/Doctor/Schedule");
+            }
+
+            await appointmentService.SetDiagnose(model);
 
             return Redirect("/Doctor/Schedule");
         }

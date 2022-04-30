@@ -16,5 +16,9 @@ namespace HM.Core.Contracts
         Task CompleteAppointment(string id);
 
         Task RemoveAppointment(string id);
+
+        Task<DiagnosePatientViewModel> GetDiagnosePatient(string id);
+
+        Task SetDiagnose(DiagnosePatientViewModel model);
     }
 }

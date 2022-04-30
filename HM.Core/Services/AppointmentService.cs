@@ -2,6 +2,7 @@
 using HM.Core.Models.Appointment;
 using HM.Infrastructure.Data;
 using HM.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace HM.Core.Services
@@ -10,9 +11,13 @@ namespace HM.Core.Services
     {
         private readonly IApplicationDbRepository repo;
 
-        public AppointmentService(IApplicationDbRepository _repo)
+        private readonly IDiseaseService diseaseService;
+
+        public AppointmentService(IApplicationDbRepository _repo,
+            IDiseaseService _diseaseService)
         {
             repo = _repo;
+            diseaseService = _diseaseService;
         }
 
         public async Task AddAppointmentToDb(AddAppointmentViewModel model)
@@ -39,6 +44,41 @@ namespace HM.Core.Services
             appointment.Status = "Completed";
 
             repo.Update<Appointment>(appointment);
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<DiagnosePatientViewModel> GetDiagnosePatient(string id)
+        {
+            var patient = await repo.GetByIdAsync<Patient>(id);
+
+            var patientDiseses = diseaseService.GetPatientDiseases(patient);
+
+            var possibleDiseases = await diseaseService.GetDiseasesList();
+
+            var diseases = possibleDiseases.Select(d => new SelectListItem()
+            {
+                Text = d,
+                Value = d,
+                Disabled = (patientDiseses == null) ? false : !patientDiseses.Contains(d)
+            });
+
+            return new DiagnosePatientViewModel()
+            {
+                PatientId = patient.Id,
+                PatientName = $"{patient.FirstName} {patient.LastName}",
+                Diseases = diseases
+            };
+        }
+
+        public async Task SetDiagnose(DiagnosePatientViewModel model)
+        {
+            var patient = await repo.GetByIdAsync<Patient>(model.PatientId);
+
+            var disease = await diseaseService.GetDiseaseByName(model.Disease);
+
+            patient.Diseases.Append<Disease>(disease);
+
+            repo.Update<Patient>(patient);
             await repo.SaveChangesAsync();
         }
 

@@ -1,5 +1,6 @@
 ﻿using HM.Core.Models;
 using HM.Core.Models.Disease;
+using HM.Infrastructure.Data;
 
 namespace HM.Core.Contracts
 {
@@ -10,5 +11,11 @@ namespace HM.Core.Contracts
         Task RemoveDiseaseFromDb(string id);
 
         Task<IEnumerable<DiseaseListViewModel>> GetDiseases();
+
+        Task<IEnumerable<string>> GetDiseasesList();
+
+        Task<Disease> GetDiseaseByName(string name);
+
+        IEnumerable<string>? GetPatientDiseases(Patient patient);
     }
 }

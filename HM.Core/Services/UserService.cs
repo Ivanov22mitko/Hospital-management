@@ -1,6 +1,5 @@
 ﻿using HM.Core.Contracts;
 using HM.Core.Models;
-using HM.Infrastructure.Data;
 using HM.Infrastructure.Data.Identity;
 using HM.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Identity;

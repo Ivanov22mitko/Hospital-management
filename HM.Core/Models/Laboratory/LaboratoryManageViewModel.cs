@@ -1,6 +1,4 @@
-﻿using HM.Infrastructure.Data;
-
-namespace HM.Core.Models.Laboratory
+﻿namespace HM.Core.Models.Laboratory
 {
     public class LaboratoryManageViewModel
     {
